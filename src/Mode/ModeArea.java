@@ -1,13 +1,9 @@
 package Mode;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
+import java.awt.GridLayout;
 
 public class ModeArea extends JPanel {
-    private static int buttonSize = 80;
-    public static int getButtonSize() {
-        return buttonSize;
-    }
-
     enum Mode {
         SELECT,
         ASSOCIATION,
@@ -37,9 +33,7 @@ public class ModeArea extends JPanel {
 
     private ModeArea() {
         super();
-
-        this.setLayout(null);
-        this.setBounds(0, 0, buttonSize, buttonSize * Mode.values().length);
+        this.setLayout(new GridLayout(Mode.values().length, 1));
         for (int i = 0; i < Mode.values().length; i++) {
             buttons[i] = new ModeButton(Mode.values()[i]);
             group.add(buttons[i]);

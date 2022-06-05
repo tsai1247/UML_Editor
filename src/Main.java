@@ -1,12 +1,17 @@
 import java.awt.Dimension;
+import java.awt.BorderLayout;
 
 import javax.swing.*;
 import Menu.MenuArea;
 import Mode.ModeArea;
+import Canvas.CanvasArea;
+
 
 public class Main {
     private static MenuArea menuarea = MenuArea.getInstance();
     private static ModeArea modearea = ModeArea.getInstance();
+    private static CanvasArea canvasarea = CanvasArea.getInstance();
+
     private static JFrame frame;
     private static JPanel panel;
     private static int width = 800, height = 600;
@@ -33,13 +38,17 @@ public class Main {
     
     //#region Add JPanel to frame
         panel = new JPanel();
-        panel.setLayout(null);
+        panel.setLayout(new BorderLayout());
         panel.setBounds(0, 0, width, height);
         frame.getContentPane().add(panel);
     //#endregion
 
+    //#region Add CanvasArea to panel
+    panel.add(canvasarea, BorderLayout.CENTER);
+    //#endregion
+
     //#region Add ModeArea to panel
-        panel.add(modearea);
+        panel.add(modearea, BorderLayout.WEST);
     //#endregion
 
 

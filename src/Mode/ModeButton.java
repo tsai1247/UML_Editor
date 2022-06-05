@@ -9,8 +9,6 @@ import Mode.ModeArea.Mode;
 public class ModeButton extends JToggleButton {
     public ModeButton(Mode mode) {
         super(mode.toString());
-        int width = ModeArea.getButtonSize();
-        this.setBounds(0, width*mode.ordinal(), width, width);
         this.setFocusable(false);
         this.addActionListener(new ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent e){
