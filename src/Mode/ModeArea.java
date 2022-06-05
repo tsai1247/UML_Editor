@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 import java.awt.GridLayout;
 
 public class ModeArea extends JPanel {
-    enum Mode {
+    public enum Mode {
         SELECT,
         ASSOCIATION,
         GENERALIZATION,

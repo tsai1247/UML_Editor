@@ -3,6 +3,7 @@ import javax.swing.JPanel;
 
 import Canvas.Shape.*;
 import Canvas.Shape.Class;
+import Mode.ModeArea;
 
 import java.awt.event.*;
 import java.awt.Graphics;
@@ -57,6 +58,19 @@ public class CanvasArea extends JPanel{
     }
 
     public void Clicked(int x, int y) {
+        switch(ModeArea.getInstance().getCurrentMode()) {
+            case SELECT:
+                break;
+            case USECASE:
+                setShape(new UseCase(shape, x, y));
+                break;
+            case CLASS:
+                setShape(new Class(shape, x, y));
+                break;
+            default:
+                break;
+        }
+
         this.repaint();
     }
     public void Released(int x, int y) {
