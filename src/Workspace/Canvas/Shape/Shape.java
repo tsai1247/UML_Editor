@@ -1,17 +1,18 @@
 package Workspace.Canvas.Shape;
 import java.awt.*;
-import java.util.Vector;
 
-import Workspace.Canvas.Line.Line;
-
-public abstract class Shape {
-    
-    protected Shape shape;
+public class Shape {
     public enum Port {
         EAST, WEST, NORTH, SOUTH
     }
 
-    protected Vector<Line> lines = new Vector<Line>();
+    public Shape(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+
     protected int x, y; // the top-left corner of the shape
     protected int width, height;
     protected String name;
@@ -29,7 +30,6 @@ public abstract class Shape {
     public boolean isSelected() {
         return isSelected;
     }
-    public abstract void setAllShapesBelowSelected(boolean isSelected);
     
     public Point getPosition(Port port) {
         switch (port) {
@@ -45,10 +45,25 @@ public abstract class Shape {
                 return null;
         }
     }
-    public abstract void draw(Graphics g);
-    public Shape getHoveredShape(Point p)
+    public void draw(Graphics g)
     {
-        return null;
+        if(isSelected) {
+            // draw selection at four ports
+            var g2d = (Graphics2D) g;
+            g2d.setColor(Color.BLUE);
+            g2d.setStroke(new BasicStroke(3));
+            for(Port port : Port.values()) {
+                g2d.drawRect(getPosition(port).x - 5, getPosition(port).y - 5, 10, 10);
+            }
+            
+            g2d.setColor(Color.BLACK);
+            g2d.setStroke(new BasicStroke(1));
+        }
+    }
+
+    public boolean isHovered(Point p)
+    {
+        return pointInShape(p);
     }
     public Port getHoveredPort(Point p)
     {
@@ -86,6 +101,21 @@ public abstract class Shape {
     }
     public String getName() {
         return name;
+    }
+    public boolean isInRectangle(Point startPoint, Point endPoint) {
+        // make startPoint be the top-left corner of the shape, endPoint be the bottom-right corner of the shape
+        if(startPoint.x > endPoint.x) {
+            int temp = startPoint.x;
+            startPoint.x = endPoint.x;
+            endPoint.x = temp;
+        }
+        if(startPoint.y > endPoint.y) {
+            int temp = startPoint.y;
+            startPoint.y = endPoint.y;
+            endPoint.y = temp;
+        }
+        
+        return startPoint.x <= x && startPoint.y <= y && endPoint.x >= x + width && endPoint.y >= y + height;
     }
 
 }

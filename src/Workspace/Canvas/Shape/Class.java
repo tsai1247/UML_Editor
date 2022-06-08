@@ -3,13 +3,11 @@ import java.awt.Graphics;
 import java.awt.*;
 import java.awt.geom.*;
 
-public class Class extends DecoratorShape {
+public class Class extends Shape {
     private int layerNum = 3;
 
-    public Class(Shape shape, int x, int y) {
-        super(shape, x, y);
-        this.width = 100;
-        this.height = 80;
+    public Class(int x, int y) {
+        super(x, y, 100, 80);
     }
 
     @Override

@@ -3,11 +3,9 @@ import java.awt.Graphics;
 import java.awt.*;
 import java.awt.geom.*;
 
-public class UseCase extends DecoratorShape {
-    public UseCase(Shape shape, int x, int y) {
-        super(shape, x, y);
-        this.width = 100;
-        this.height = 80;
+public class UseCase extends Shape {
+    public UseCase(int x, int y) {
+        super(x, y, 100, 80);
     }
 
     @Override

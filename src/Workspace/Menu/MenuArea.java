@@ -1,9 +1,11 @@
 package Workspace.Menu;
 import javax.swing.JMenuBar;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import Workspace.Canvas.CanvasArea;
 import Workspace.Canvas.Shape.Composite;
+import Workspace.Canvas.Shape.Shape;
 
 public class MenuArea extends JMenuBar{
     private static MenuArea instance = null;
@@ -16,7 +18,11 @@ public class MenuArea extends JMenuBar{
             new MenuItem("Group", new ActionListener(){
                 public void actionPerformed(java.awt.event.ActionEvent e){
                     System.out.println("Group");
-                    CanvasArea.getInstance().setShape(new Composite(CanvasArea.getInstance().getShape()));
+                    Vector<Shape> selectedShapes = CanvasArea.getInstance().getSelectedShapes();
+                    if(selectedShapes.size() > 1) {
+                        Composite composite = new Composite(selectedShapes);
+                        CanvasArea.getInstance().getShapes().add(composite);
+                    }
                     CanvasArea.getInstance().repaint();
                 }
             }),

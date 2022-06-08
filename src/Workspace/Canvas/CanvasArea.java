@@ -69,27 +69,39 @@ public class CanvasArea extends JPanel{
     }
     
     private Vector<Line> lines = new Vector<Line>();
-    private Shape shape = new SimpleShape();
-    public void setShape(Shape shape) {
-        if(shape.getWidth() == 0 || shape.getHeight() == 0) {
-            return;
-        }
-        this.shape = shape;
-    }
-    public Shape getShape() {
-        return shape;
-    }
+    private Vector<Shape> shapes = new Vector<Shape>();
 
     private Point startPoint = null, endPoint = null;
 
     public Shape getHoveredShape(Point point) {
-        return shape.getHoveredShape(point);
+        for(int i=shapes.size()-1; i>=0; i--) {
+            Shape shape = shapes.get(i);
+            if(shape.isHovered(point)) {
+                return shape;
+            }
+        }
+        return null;
+    }
+    public Vector<Shape> getShapes() {
+        return shapes;
+    }
+    public Vector<Shape> getSelectedShapes()
+    {
+        Vector<Shape> selectedShapes = new Vector<Shape>();
+        for(int i=shapes.size()-1; i>=0; i--) {
+            if(shapes.get(i).isSelected()) {
+                selectedShapes.add(shapes.get(i));
+            }
+        }
+        return selectedShapes;
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        shape.draw(g);
+        for(Shape shape : shapes) {
+            shape.draw(g);
+        }
         for(Line line : lines) {
             line.draw(g);
         }
@@ -105,10 +117,10 @@ public class CanvasArea extends JPanel{
                 }
                 break;
             case USECASE:
-                setShape(new UseCase(shape, x, y));
+                shapes.add(new UseCase(x, y));
                 break;
             case CLASS:
-                setShape(new Class(shape, x, y));
+                shapes.add(new Class(x, y));
                 break;
             default:
                 break;
@@ -122,7 +134,13 @@ public class CanvasArea extends JPanel{
             case SELECT:
                 endPoint = new Point(x, y);
                 if(mode == Mode.SELECT)
-                    shape.setSelected(startPoint, endPoint);
+                {
+                    for(Shape shape : shapes) {
+                        if(shape.isInRectangle(startPoint, endPoint)) {
+                            shape.setSelected(true);
+                        }
+                    }
+                }
                 break;
             case ASSOCIATION:
                 endPoint = new Point(x, y);
@@ -176,15 +194,19 @@ public class CanvasArea extends JPanel{
                 if(getHoveredShape(startPoint) != null && getHoveredShape(startPoint).isSelected()) {
                     setMode(Mode.MOVE);
                 }
-                else if(getHoveredShape(startPoint) != null)
-                {
-                    shape.setAllShapesBelowSelected(false);
-                    setMode(Mode.NONE);
-                }
                 else
                 {
-                    shape.setAllShapesBelowSelected(false);
-                    setMode(Mode.SELECT);
+                    for(Shape shape : shapes) {
+                        shape.setSelected(false);
+                    }
+                    if(getHoveredShape(startPoint) != null)
+                    {
+                        setMode(Mode.NONE);
+                    }
+                    else
+                    {
+                        setMode(Mode.SELECT);
+                    }
                 }
                 break;
             case ASSOCIATION:
