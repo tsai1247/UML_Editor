@@ -5,11 +5,11 @@ import java.awt.Color;
 import java.awt.*;
 
 public class DecoratorShape extends Shape {
-    protected Shape shape;
     public DecoratorShape(Shape shape, int x, int y) {
         this.shape = shape;
         this.x = x;
         this.y = y;
+        this.name = getClass().getSimpleName();
     }
     
     @Override

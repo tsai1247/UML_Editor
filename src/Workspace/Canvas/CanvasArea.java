@@ -71,7 +71,13 @@ public class CanvasArea extends JPanel{
     private Vector<Line> lines = new Vector<Line>();
     private Shape shape = new SimpleShape();
     public void setShape(Shape shape) {
+        if(shape.getWidth() == 0 || shape.getHeight() == 0) {
+            return;
+        }
         this.shape = shape;
+    }
+    public Shape getShape() {
+        return shape;
     }
 
     private Point startPoint = null, endPoint = null;
@@ -95,6 +101,7 @@ public class CanvasArea extends JPanel{
                 var hoveredShape = getHoveredShape(new Point(x, y));
                 if(hoveredShape != null) {
                     hoveredShape.setSelected(true);
+                    System.out.println("selected: " + hoveredShape.getName());
                 }
                 break;
             case USECASE:

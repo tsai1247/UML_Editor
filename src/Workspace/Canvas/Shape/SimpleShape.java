@@ -13,5 +13,10 @@ public class SimpleShape extends Shape {
     @Override
     public void setAllShapesBelowSelected(boolean isSelected) {
     }
+
+    @Override
+    public boolean isSelected() {
+        return false;
+    }
     
 }

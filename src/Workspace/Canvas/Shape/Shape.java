@@ -5,6 +5,8 @@ import java.util.Vector;
 import Workspace.Canvas.Line.Line;
 
 public abstract class Shape {
+    
+    protected Shape shape;
     public enum Port {
         EAST, WEST, NORTH, SOUTH
     }
@@ -12,6 +14,14 @@ public abstract class Shape {
     protected Vector<Line> lines = new Vector<Line>();
     protected int x, y; // the top-left corner of the shape
     protected int width, height;
+    protected String name;
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
+    }
+
     protected boolean isSelected = false;
     public void setSelected(boolean isSelected) {
         this.isSelected = isSelected;
@@ -73,6 +83,9 @@ public abstract class Shape {
         // shape is selected if it is in the rectangle of startPoint and endPoint
         isSelected = startPoint.x <= x && startPoint.y <= y && endPoint.x >= x + width && endPoint.y >= y + height;
         
+    }
+    public String getName() {
+        return name;
     }
 
 }

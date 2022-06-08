@@ -2,6 +2,9 @@ package Workspace.Menu;
 import javax.swing.JMenuBar;
 import java.awt.event.ActionListener;
 
+import Workspace.Canvas.CanvasArea;
+import Workspace.Canvas.Shape.Composite;
+
 public class MenuArea extends JMenuBar{
     private static MenuArea instance = null;
     private MenuArea(){
@@ -13,6 +16,8 @@ public class MenuArea extends JMenuBar{
             new MenuItem("Group", new ActionListener(){
                 public void actionPerformed(java.awt.event.ActionEvent e){
                     System.out.println("Group");
+                    CanvasArea.getInstance().setShape(new Composite(CanvasArea.getInstance().getShape()));
+                    CanvasArea.getInstance().repaint();
                 }
             }),
             new MenuItem("Ungroup", new ActionListener(){
