@@ -6,13 +6,18 @@ import Canvas.Line.Line;
 
 public abstract class Shape {
     public enum Port {
-        EAST, WEST, NORTH, SOUTH, CENTER
+        EAST, WEST, NORTH, SOUTH
     }
 
     protected Vector<Line> lines = new Vector<Line>();
     protected int x, y; // the top-left corner of the shape
     protected int width, height;
-
+    protected boolean isSelected = false;
+    public void setSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+    public abstract void setAllShapesBelowSelected(boolean isSelected);
+    
     public Point getPosition(Port port) {
         switch (port) {
             case EAST:
@@ -23,8 +28,6 @@ public abstract class Shape {
                 return new Point(x + width / 2, y);
             case SOUTH:
                 return new Point(x + width / 2, y + height);
-            case CENTER:
-                return new Point(x + width / 2, y + height / 2);
             default:
                 return null;
         }
@@ -40,9 +43,6 @@ public abstract class Shape {
         for(Port port_ : Port.values())
         {
             // not to check the center value
-            if(port_ == Port.CENTER)
-                continue;
-            
             if(p.distance(getPosition(port_)) < p.distance(getPosition(port)))
             {
                 port = port_;

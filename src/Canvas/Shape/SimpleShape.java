@@ -9,5 +9,9 @@ public class SimpleShape extends Shape {
     @Override
     public void draw(Graphics g) {
     }
+
+    @Override
+    public void setAllShapesBelowSelected(boolean isSelected) {
+    }
     
 }

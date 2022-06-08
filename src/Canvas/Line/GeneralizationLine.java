@@ -1,6 +1,5 @@
 package Canvas.Line;
 import java.awt.*;
-import java.awt.geom.*;
 
 import Canvas.Shape.Shape;
 import Canvas.Shape.Shape.Port;

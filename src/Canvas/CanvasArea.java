@@ -77,6 +77,11 @@ public class CanvasArea extends JPanel{
     public void Clicked(int x, int y) {
         switch(ModeArea.getInstance().getCurrentMode()) {
             case SELECT:
+                shape.setAllShapesBelowSelected(false);
+                var hoveredShape = getHoveredShape(new Point(x, y));
+                if(hoveredShape != null) {
+                    hoveredShape.setSelected(true);
+                }
                 break;
             case USECASE:
                 setShape(new UseCase(shape, x, y));
