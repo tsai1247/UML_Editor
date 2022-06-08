@@ -5,7 +5,11 @@ import java.awt.geom.*;
 public class Body {
     protected BasicStroke stroke = new BasicStroke(1.0f);
     protected BasicStroke highlightedstroke = new BasicStroke(3.0f);
+    
     protected boolean isHighlighted = false;
+    public void setHighlighted(boolean b) {
+        isHighlighted = b;
+    }
     
     public void draw(Graphics g, Point startPoint, Point endPoint) {
         Graphics2D g2d = (Graphics2D) g;
@@ -15,7 +19,4 @@ public class Body {
         g2d.draw(Line);
     }
 
-    public void setHighlighted(boolean b) {
-        isHighlighted = b;
-    }
 }

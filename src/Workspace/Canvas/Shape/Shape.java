@@ -3,10 +3,6 @@ import java.awt.*;
 import java.util.Vector;
 
 public class Shape {
-    public enum Port {
-        EAST, WEST, NORTH, SOUTH
-    }
-
     public Shape(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
@@ -15,29 +11,9 @@ public class Shape {
         this.name = getClass().getSimpleName();
     }
 
-    
-    protected Vector<Shape> shapes = new Vector<Shape>();
-    public Vector<Shape> getShapes() {
-        return shapes;
+    public enum Port {
+        EAST, WEST, NORTH, SOUTH
     }
-    protected int x, y; // the top-left corner of the shape
-    protected int width, height;
-    protected String name;
-    public int getWidth() {
-        return width;
-    }
-    public int getHeight() {
-        return height;
-    }
-
-    protected boolean isSelected = false;
-    public void setSelected(boolean isSelected) {
-        this.isSelected = isSelected;
-    }
-    public boolean isSelected() {
-        return isSelected;
-    }
-    
     public Point getPosition(Port port) {
         switch (port) {
             case EAST:
@@ -51,30 +27,6 @@ public class Shape {
             default:
                 return null;
         }
-    }
-    public void draw(Graphics g)
-    {
-        if(isSelected) {
-            // draw selection at four ports
-            var g2d = (Graphics2D) g;
-            g2d.setColor(Color.BLUE);
-            g2d.setStroke(new BasicStroke(3));
-            for(Port port : Port.values()) {
-                g2d.drawRect(getPosition(port).x - 5, getPosition(port).y - 5, 10, 10);
-            }
-            
-            g2d.setColor(Color.BLACK);
-            g2d.setStroke(new BasicStroke(1));
-        }
-
-        // draw name
-        g.setColor(Color.BLACK);
-        g.drawString(name, x + width / 2 - name.length() * 3, y + height / 2);
-    }
-
-    public boolean isHovered(Point p)
-    {
-        return pointInShape(p);
     }
     public Port getHoveredPort(Point p)
     {
@@ -100,16 +52,62 @@ public class Shape {
         }
         return null;
     }
-
-    protected boolean pointInShape(Point p) {
-        return p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height;
+    
+    protected Vector<Shape> shapes = new Vector<Shape>();
+    public Vector<Shape> getShapes() {
+        return shapes;
     }
+
+    protected int x, y; // the top-left corner of the shape
+    protected int width, height;
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
+    }
+
+    protected String name;
     public String getName() {
         return name;
     }
     public void setName(String name) {
         this.name = name;
     }
+
+    protected boolean isSelected = false;
+    public void setSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+    public boolean isSelected() {
+        return isSelected;
+    }
+    
+    public void draw(Graphics g)
+    {
+        if(isSelected) {
+            // draw selection at four ports
+            var g2d = (Graphics2D) g;
+            g2d.setColor(Color.BLUE);
+            g2d.setStroke(new BasicStroke(3));
+            for(Port port : Port.values()) {
+                g2d.drawRect(getPosition(port).x - 5, getPosition(port).y - 5, 10, 10);
+            }
+            
+            g2d.setColor(Color.BLACK);
+            g2d.setStroke(new BasicStroke(1));
+        }
+
+        // draw name
+        g.setColor(Color.BLACK);
+        g.drawString(name, x + width / 2 - name.length() * 3, y + height / 2);
+    }
+
+    public boolean isHovered(Point p)
+    {
+        return p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height;
+    }
+
     public boolean isInRectangle(Point startPoint, Point endPoint) {
         // make startPoint be the top-left corner of the shape, endPoint be the bottom-right corner of the shape
         if(startPoint.x > endPoint.x) {
@@ -125,6 +123,7 @@ public class Shape {
         
         return startPoint.x <= x && startPoint.y <= y && endPoint.x >= x + width && endPoint.y >= y + height;
     }
+    
     public void move(int dx, int dy) {
         x += dx;
         y += dy;

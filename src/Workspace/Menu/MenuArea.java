@@ -8,13 +8,24 @@ import Workspace.Canvas.Shape.Composite;
 import Workspace.Canvas.Shape.Shape;
 
 public class MenuArea extends JMenuBar{
+    // singleton pattern
     private static MenuArea instance = null;
+    public static MenuArea getInstance(){
+        if(instance == null){
+            instance = new MenuArea();
+        }
+        return instance;
+    }
+    private MenuArea(){
+        super();
+        setComponents();
+    }
+
+
     MenuFolder File, Edit;
     MenuItem group, ungroup, changeName;
 
-    private MenuArea(){
-        super();
-        
+    private void setComponents(){
         // create menu
         // file menu
         File = new MenuFolder("File", new MenuItem[]{});
@@ -67,7 +78,7 @@ public class MenuArea extends JMenuBar{
         });
         
         // edit menu
-        var Edit = new MenuFolder("Edit", new MenuItem[]{group, ungroup, changeName});
+        Edit = new MenuFolder("Edit", new MenuItem[]{group, ungroup, changeName});
 
         // all items is initialized disabled
         group.setEnabled(false);
@@ -77,6 +88,7 @@ public class MenuArea extends JMenuBar{
         this.add(File);
         this.add(Edit);
     }
+
     public enum Option
     {
         GROUP,
@@ -99,11 +111,5 @@ public class MenuArea extends JMenuBar{
         }
     }
 
-    public static MenuArea getInstance(){
-        if(instance == null){
-            instance = new MenuArea();
-        }
-        return instance;
-    }
 
 }

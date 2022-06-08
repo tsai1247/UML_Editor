@@ -9,7 +9,6 @@ public class HollowDiamond extends Arrow {
         var arrowHeadLeftPoint = getRotatedPoint(endPoint, startPoint, angle);
         var arrowHeadRightPoint = getRotatedPoint(endPoint, startPoint, -angle);
         var arrowHeadBackPoint = getPointWithLength(startPoint, endPoint, arrowHeadLength  * Math.sqrt(2));
-
         drawALine(g2d, startPoint, endPoint);
         drawALine(g2d, endPoint, arrowHeadLeftPoint);
         drawALine(g2d, endPoint, arrowHeadRightPoint);

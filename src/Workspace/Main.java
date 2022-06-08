@@ -24,39 +24,31 @@ public class Main {
     }
 
     private static void createAndShowGUI() {
-    // Create and set up the window.
+        //Create and set up the window.
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("UML Editor");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         frame.setPreferredSize(new Dimension(width, height));
-        
-    //#endregion
 
-    //#region Add MenuArea to frame
+        //Add MenuArea to frame
         frame.setJMenuBar(menuarea);
-    //#endregion
-    
-    //#region Add JPanel to frame
+        
+        //Add JPanel to frame
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBounds(0, 0, width, height);
         frame.getContentPane().add(panel);
-    //#endregion
 
-    //#region Add CanvasArea to panel
-    panel.add(canvasarea, BorderLayout.CENTER);
-    //#endregion
+        //Add CanvasArea to panel
+        panel.add(canvasarea, BorderLayout.CENTER);
 
-    //#region Add ModeArea to panel
+        //Add ModeArea to panel
         panel.add(modearea, BorderLayout.WEST);
-    //#endregion
 
-
-    //#region Show the window.
+        //Show the window.
         frame.pack();
         frame.setVisible(true);
-    //#endregion
 
     }
 

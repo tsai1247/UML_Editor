@@ -1,31 +1,29 @@
 package Workspace.Menu;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import Workspace.Canvas.CanvasArea;
-import java.awt.event.*;
 
 public class RenameWindow {
-    
     JFrame frame = new JFrame("Rename");
+    JTextField textField = new JTextField();
+    JButton okButton = new JButton("OK");
+    JButton cancelButton = new JButton("Cancel");
+
     public RenameWindow(String originalName) {
         frame.setLayout(null);
 
-        // create a text area
-        JTextField textArea = new JTextField();
-        textArea.setText(originalName);
-        textArea.setBounds(10, 10, 200, 30);
-        textArea.setAlignmentY(JTextField.CENTER_ALIGNMENT);
-        frame.add(textArea);
+        // set text field
+        textField.setText(originalName);
+        textField.setBounds(10, 10, 200, 30);
+        textField.setAlignmentY(JTextField.CENTER_ALIGNMENT);
+        frame.add(textField);
 
-        // create an OK button
-        JButton okButton = new JButton("OK");
+        // set ok button
         okButton.setBounds(10, 50, 80, 30);
         frame.add(okButton);
 
-        // create a cancel button
-        JButton cancelButton = new JButton("Cancel");
+        // set cancel button
         cancelButton.setBounds(100, 50, 80, 30);
         frame.add(cancelButton);
 
@@ -33,19 +31,13 @@ public class RenameWindow {
         frame.setSize(300, 150);
 
         // add action listener to the OK button
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String newName = textArea.getText();
-                CanvasArea.getInstance().getSelectedShapes().get(0).setName(newName);
-                frame.dispose();
-            }
+        okButton.addActionListener(e->{
+            OK_Clicked();
         });
 
         // add action listener to the Cancel button
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
+        cancelButton.addActionListener(e->{
+            Cancel_Clicked();
         });
     }
 
@@ -53,4 +45,14 @@ public class RenameWindow {
         frame.setVisible(true);
     }
 
+    private void OK_Clicked()
+    {
+        String newName = textField.getText();
+        CanvasArea.getInstance().getSelectedShapes().get(0).setName(newName);
+        frame.dispose();
+    }
+    private void Cancel_Clicked()
+    {
+        frame.dispose();
+    }
 }

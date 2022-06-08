@@ -9,5 +9,4 @@ public class GeneralizationLine extends Line {
         super(startShape, startPort, endShape, endPort);
         FrontArrow = new HollowTriangle();
     }
-
 }

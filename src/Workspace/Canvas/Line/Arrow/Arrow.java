@@ -25,14 +25,13 @@ public class Arrow {
         g2d.fillPolygon(arrowHead);
     }
 
-    public void drawALine(Graphics g, Point startPoint, Point endPoint)
+    protected void drawALine(Graphics g, Point startPoint, Point endPoint)
     {
         Graphics2D g2d = (Graphics2D) g;
         var Line = new Line2D.Double(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
         g2d.setColor(Color.BLACK);
         g2d.draw(Line);
     }
-
 
     protected Point getRotatedPoint(Point p, Point center, double angle) {
         double x = p.x - center.x;

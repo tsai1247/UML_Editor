@@ -9,5 +9,4 @@ public class DependencyLine extends Line {
         super(startShape, startPort, endShape, endPort);
         LineBody = new DottedLine();
     }
-    
 }

@@ -9,5 +9,4 @@ public class CompositionLine extends Line {
         super(startShape, startPort, endShape, endPort);
         FrontArrow = new HollowDiamond();
     }
-
 }

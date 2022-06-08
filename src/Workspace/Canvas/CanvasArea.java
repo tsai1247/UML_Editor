@@ -1,11 +1,7 @@
 package Workspace.Canvas;
 import javax.swing.JPanel;
 
-import Workspace.Canvas.Line.AssociationLine;
-import Workspace.Canvas.Line.CompositionLine;
-import Workspace.Canvas.Line.DependencyLine;
-import Workspace.Canvas.Line.GeneralizationLine;
-import Workspace.Canvas.Line.Line;
+import Workspace.Canvas.Line.*;
 import Workspace.Canvas.Shape.*;
 import Workspace.Canvas.Shape.Class;
 import Workspace.Menu.MenuArea;
@@ -18,6 +14,39 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 public class CanvasArea extends JPanel{
+    // singleton pattern
+    private static CanvasArea instance = null;
+    public static CanvasArea getInstance() {
+        if(instance == null) {
+            instance = new CanvasArea();
+        }
+        return instance;
+    }
+    private CanvasArea() {
+        super();
+        this.setLayout(null);
+
+        this.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                Clicked(e.getX(), e.getY());
+            }
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                Pressed(e.getX(), e.getY());
+            }
+            @Override
+            public void mouseReleased(MouseEvent e)
+            {
+                Released(e.getX(), e.getY());
+            }
+        });
+    }
+
+    // factory pattern
     protected Line createLine(Mode mode, Shape startShape, Point startPoint, Shape endShape, Point endPoint) {
         var startPort = startShape.getHoveredPort(startPoint);
         var endPort = endShape.getHoveredPort(endPoint);
@@ -45,57 +74,9 @@ public class CanvasArea extends JPanel{
         }
     }
 
-    private static CanvasArea instance = null;
-    public static CanvasArea getInstance() {
-        if(instance == null) {
-            instance = new CanvasArea();
-        }
-        return instance;
-    }
-    private CanvasArea() {
-        super();
-        this.setLayout(null);
-
-        // addMouseListener
-        this.addMouseListener(new MouseAdapter()
-        {
-            @Override
-            public void mouseClicked(MouseEvent e)
-            {
-                Clicked(e.getX(), e.getY());
-            }
-            @Override
-            public void mousePressed(MouseEvent e)
-            {
-                Pressed(e.getX(), e.getY());
-            }
-            @Override
-            public void mouseReleased(MouseEvent e)
-            {
-                Released(e.getX(), e.getY());
-            }
-            @Override
-            public void mouseDragged(MouseEvent e)
-            {
-                Moved(e.getX(), e.getY());
-            }
-        });
-    }
-    
+    // containers    
     private Vector<Line> lines = new Vector<Line>();
     private Vector<Shape> shapes = new Vector<Shape>();
-
-    private Point startPoint = null, endPoint = null;
-
-    public Shape getHoveredShape(Point point) {
-        for(int i=shapes.size()-1; i>=0; i--) {
-            Shape shape = shapes.get(i);
-            if(shape.isHovered(point)) {
-                return shape;
-            }
-        }
-        return null;
-    }
     public Vector<Shape> getShapes() {
         return shapes;
     }
@@ -109,18 +90,20 @@ public class CanvasArea extends JPanel{
         }
         return selectedShapes;
     }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        for(Shape shape : shapes) {
-            shape.draw(g);
+    public Shape getHoveredShape(Point point) {
+        for(int i=shapes.size()-1; i>=0; i--) {
+            Shape shape = shapes.get(i);
+            if(shape.isHovered(point)) {
+                return shape;
+            }
         }
-        for(Line line : lines) {
-            line.draw(g);
-        }
+        return null;
     }
 
+    // record Point when mouse pressed
+    private Point startPoint = null, endPoint = null;
+
+    // control the menu items' state
     public void setOptionEnabled()
     {
         var selectedShapes = getSelectedShapes();
@@ -146,36 +129,56 @@ public class CanvasArea extends JPanel{
             MenuArea.getInstance().setEnabled(MenuArea.Option.UNGROUP, false);
             MenuArea.getInstance().setEnabled(MenuArea.Option.CHANGE_NAME, false);
         }
-
     }
 
+    // control the status of objects on the canvas
+    public void ClearSelectedShape() {
+        for(Shape shape : shapes) {
+            shape.setSelected(false);
+        }
+        setOptionEnabled();
+        this.repaint();
+    }
+    public void ClearHighlightedLine()
+    {    
+        for(Line line : lines) {
+            line.setHighlighted(false);
+        }
+        this.repaint();
+    }
+
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for(Shape shape : shapes) {
+            shape.draw(g);
+        }
+        for(Line line : lines) {
+            line.draw(g);
+        }
+    }
+
+    // event handlers
     public void Clicked(int x, int y) {
         switch(ModeArea.getInstance().getCurrentMode()) {
             case SELECT:
                 var hoveredShape = getHoveredShape(new Point(x, y));
                 if(hoveredShape != null) {
-                    if(hoveredShape.isSelected()) {
-                        // check if user clicked on a port
-                        var clickedPort = hoveredShape.getHoveredPort(new Point(x, y));
-                        if(clickedPort!= null) {
-                            // highlight all lines connected to this port
-                            for(Line line : lines) {
-                                if(line.getStartShape() == hoveredShape) {
-                                    if(line.getStartPort() == clickedPort) {
-                                        line.setHighlighted(true);
-                                    }
-                                }
-                                else if(line.getEndShape() == hoveredShape) {
-                                    if(line.getEndPort() == clickedPort) {
-                                        line.setHighlighted(true);
-                                    }
-                                }
+                    var clickedPort = hoveredShape.getHoveredPort(new Point(x, y));
+                    if(hoveredShape.isSelected() && clickedPort != null) {
+                        // highlight all lines connected to this port
+                        for(Line line : lines) {
+                            if(line.getStartShape() == hoveredShape && line.getStartPort() == clickedPort) {
+                                    line.setHighlighted(true);
+                            }
+                            else if(line.getEndShape() == hoveredShape && line.getEndPort() == clickedPort) {
+                                    line.setHighlighted(true);
                             }
                         }
                     }
                     else {
                         hoveredShape.setSelected(true);
-                        System.out.println("selected: " + hoveredShape.getName());
                     }
                 }
                 setOptionEnabled();
@@ -195,14 +198,12 @@ public class CanvasArea extends JPanel{
         switch(ModeArea.getInstance().getCurrentMode()) {
             case SELECT:
                 endPoint = new Point(x, y);
-                
                 Moved(x, y);
                 for(Shape shape : shapes) {
                     if(shape.isInRectangle(startPoint, endPoint)) {
                         shape.setSelected(true);
                     }
                 }
-
                 setOptionEnabled();
                 break;
             case ASSOCIATION:
@@ -213,9 +214,7 @@ public class CanvasArea extends JPanel{
                 startShape = getHoveredShape(startPoint);
                 endShape = getHoveredShape(endPoint);
                 if(startShape != null && endShape != null && startShape != endShape) {
-                    lines.add(
-                        createLine(ModeArea.getInstance().getCurrentMode(), startShape, startPoint, endShape, endPoint)
-                    );
+                    lines.add(createLine(ModeArea.getInstance().getCurrentMode(), startShape, startPoint, endShape, endPoint));
                 }
                 break;
             default:
@@ -223,20 +222,7 @@ public class CanvasArea extends JPanel{
         }
         this.repaint();
     }
-    public void ClearSelectedShape() {
-        for(Shape shape : shapes) {
-            shape.setSelected(false);
-        }
-        setOptionEnabled();
-        this.repaint();
-    }
-    public void ClearHighlightedLine()
-    {    
-        for(Line line : lines) {
-            line.setHighlighted(false);
-        }
-        this.repaint();
-    }
+    
 
     public void Pressed(int x, int y) {
         switch(ModeArea.getInstance().getCurrentMode()) {
