@@ -47,4 +47,10 @@ public class DecoratorShape extends Shape {
         shape.setAllShapesBelowSelected(isSelected);        
     }
 
+    @Override
+    public void setSelected(Point startPoint, Point endPoint) {
+        super.setSelected(startPoint, endPoint);
+        shape.setSelected(startPoint, endPoint);
+    }
+
 }

@@ -15,6 +15,22 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 public class CanvasArea extends JPanel{
+    enum Mode {
+        SELECT,
+        ASSOCIATION,
+        COMPOSITION,
+        GENERALIZATION,
+        CLASS,
+        USECASE,
+        MOVE,
+        NONE
+    }
+    protected Mode mode = Mode.NONE;
+    private Mode setMode(Mode mode) {
+        this.mode = mode;
+        System.out.println("mode: " + mode);
+        return mode;
+    }
     private static CanvasArea instance = null;
     public static CanvasArea getInstance() {
         if(instance == null) {
@@ -58,8 +74,7 @@ public class CanvasArea extends JPanel{
         this.shape = shape;
     }
 
-    private Point startPoint = null;
-    private Point endPoint = null;
+    private Point startPoint = null, endPoint = null;
 
     public Shape getHoveredShape(Point point) {
         return shape.getHoveredShape(point);
@@ -77,7 +92,6 @@ public class CanvasArea extends JPanel{
     public void Clicked(int x, int y) {
         switch(ModeArea.getInstance().getCurrentMode()) {
             case SELECT:
-                shape.setAllShapesBelowSelected(false);
                 var hoveredShape = getHoveredShape(new Point(x, y));
                 if(hoveredShape != null) {
                     hoveredShape.setSelected(true);
@@ -99,6 +113,9 @@ public class CanvasArea extends JPanel{
         Shape startShape, endShape;
         switch(ModeArea.getInstance().getCurrentMode()) {
             case SELECT:
+                endPoint = new Point(x, y);
+                if(mode == Mode.SELECT)
+                    shape.setSelected(startPoint, endPoint);
                 break;
             case ASSOCIATION:
                 endPoint = new Point(x, y);
@@ -148,6 +165,21 @@ public class CanvasArea extends JPanel{
     public void Pressed(int x, int y) {
         switch(ModeArea.getInstance().getCurrentMode()) {
             case SELECT:
+                startPoint = new Point(x, y);
+                if(getHoveredShape(startPoint) != null && getHoveredShape(startPoint).isSelected()) {
+                    setMode(Mode.MOVE);
+                }
+                else if(getHoveredShape(startPoint) != null)
+                {
+                    shape.setAllShapesBelowSelected(false);
+                    setMode(Mode.NONE);
+                }
+                else
+                {
+                    shape.setAllShapesBelowSelected(false);
+                    setMode(Mode.SELECT);
+                }
+                break;
             case ASSOCIATION:
             case COMPOSITION:
             case GENERALIZATION:
@@ -159,7 +191,6 @@ public class CanvasArea extends JPanel{
         this.repaint();
     }
     public void Moved(int x, int y) {
-        // TODO
         this.repaint();
     }
 }
