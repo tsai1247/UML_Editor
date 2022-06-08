@@ -106,5 +106,12 @@ public class Shape {
         
         return startPoint.x <= x && startPoint.y <= y && endPoint.x >= x + width && endPoint.y >= y + height;
     }
+    public void move(int dx, int dy) {
+        x += dx;
+        y += dy;
+        for (Shape shape : shapes) {
+            shape.move(dx, dy);
+        }
+    }
 
 }

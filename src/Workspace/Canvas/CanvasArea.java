@@ -61,7 +61,7 @@ public class CanvasArea extends JPanel{
                 Released(e.getX(), e.getY());
             }
             @Override
-            public void mouseMoved(MouseEvent e)
+            public void mouseDragged(MouseEvent e)
             {
                 Moved(e.getX(), e.getY());
             }
@@ -140,6 +140,10 @@ public class CanvasArea extends JPanel{
                             shape.setSelected(true);
                         }
                     }
+                }
+                else if(mode == Mode.MOVE)
+                {
+                    Moved(x, y);
                 }
                 break;
             case ASSOCIATION:
@@ -220,6 +224,16 @@ public class CanvasArea extends JPanel{
         this.repaint();
     }
     public void Moved(int x, int y) {
-        this.repaint();
+        if(mode == Mode.MOVE) {
+            mode = Mode.NONE;
+            System.out.println("move");
+            for(Shape shape : shapes) {
+                if(shape.isSelected()) {
+                    shape.move(x - startPoint.x, y - startPoint.y);
+                }
+            }
+            startPoint = new Point(x, y);
+            this.repaint();
+        }
     }
 }
