@@ -7,6 +7,7 @@ import Workspace.Canvas.Line.GeneralizationLine;
 import Workspace.Canvas.Line.Line;
 import Workspace.Canvas.Shape.*;
 import Workspace.Canvas.Shape.Class;
+import Workspace.Menu.MenuArea;
 import Workspace.Mode.ModeArea;
 
 import java.awt.event.*;
@@ -107,6 +108,34 @@ public class CanvasArea extends JPanel{
         }
     }
 
+    public void setOptionEnabled()
+    {
+        var selectedShapes = getSelectedShapes();
+        var size = selectedShapes.size();
+        if(size == 0) {
+            MenuArea.getInstance().setEnabled(MenuArea.Option.GROUP, false);
+            MenuArea.getInstance().setEnabled(MenuArea.Option.UNGROUP, false);
+            MenuArea.getInstance().setEnabled(MenuArea.Option.CHANGE_NAME, false);
+        }
+        else if(size == 1) {
+            MenuArea.getInstance().setEnabled(MenuArea.Option.GROUP, false);
+            if(selectedShapes.get(0).getShapes().size() > 0) {
+                MenuArea.getInstance().setEnabled(MenuArea.Option.UNGROUP, true);
+                MenuArea.getInstance().setEnabled(MenuArea.Option.CHANGE_NAME, false);
+            }
+            else {
+                MenuArea.getInstance().setEnabled(MenuArea.Option.UNGROUP, false);
+                MenuArea.getInstance().setEnabled(MenuArea.Option.CHANGE_NAME, true);
+            }
+        }
+        else {
+            MenuArea.getInstance().setEnabled(MenuArea.Option.GROUP, true);
+            MenuArea.getInstance().setEnabled(MenuArea.Option.UNGROUP, false);
+            MenuArea.getInstance().setEnabled(MenuArea.Option.CHANGE_NAME, false);
+        }
+
+    }
+
     public void Clicked(int x, int y) {
         switch(ModeArea.getInstance().getCurrentMode()) {
             case SELECT:
@@ -115,6 +144,12 @@ public class CanvasArea extends JPanel{
                     hoveredShape.setSelected(true);
                     System.out.println("selected: " + hoveredShape.getName());
                 }
+                else
+                {
+                    MenuArea.getInstance().setEnabled(MenuArea.Option.CHANGE_NAME, false);
+                    MenuArea.getInstance().setEnabled(MenuArea.Option.UNGROUP, false);
+                }
+                setOptionEnabled();
                 break;
             case USECASE:
                 shapes.add(new UseCase(x, y));
@@ -145,6 +180,7 @@ public class CanvasArea extends JPanel{
                 {
                     Moved(x, y);
                 }
+                setOptionEnabled();
                 break;
             case ASSOCIATION:
                 endPoint = new Point(x, y);

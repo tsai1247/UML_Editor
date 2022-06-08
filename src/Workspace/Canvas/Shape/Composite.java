@@ -8,6 +8,7 @@ public class Composite extends Shape {
     public Composite(Vector<Shape> shapes) {
         super(0, 0, 0, 0);
         this.shapes = shapes;
+        this.name = "";
         isSelected = true;
         Point startPoint = null, endPoint = null;
         for(Shape shape : shapes) {
