@@ -12,6 +12,7 @@ public class Shape {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.name = getClass().getSimpleName();
     }
 
     
@@ -65,6 +66,10 @@ public class Shape {
             g2d.setColor(Color.BLACK);
             g2d.setStroke(new BasicStroke(1));
         }
+
+        // draw name
+        g.setColor(Color.BLACK);
+        g.drawString(name, x + width / 2 - name.length() * 3, y + height / 2);
     }
 
     public boolean isHovered(Point p)
@@ -90,6 +95,9 @@ public class Shape {
     }
     public String getName() {
         return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
     public boolean isInRectangle(Point startPoint, Point endPoint) {
         // make startPoint be the top-left corner of the shape, endPoint be the bottom-right corner of the shape

@@ -43,6 +43,16 @@ public class MenuArea extends JMenuBar{
             new MenuItem("Change Name", new ActionListener(){
                 public void actionPerformed(java.awt.event.ActionEvent e){
                     System.out.println("Change Name");
+                    RenameWindow renameWindow;
+
+                    Vector<Shape> selectedShapes = CanvasArea.getInstance().getSelectedShapes();
+                    if(selectedShapes.size() == 1) {
+                        renameWindow = new RenameWindow(selectedShapes.get(0).getName());
+                    }
+                    else{
+                        renameWindow = new RenameWindow("");
+                    }
+                    renameWindow.ShowWindow();
                 }
             }),
         }));
