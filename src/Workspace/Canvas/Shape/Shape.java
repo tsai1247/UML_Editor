@@ -1,5 +1,6 @@
 package Workspace.Canvas.Shape;
 import java.awt.*;
+import java.util.Vector;
 
 public class Shape {
     public enum Port {
@@ -13,6 +14,11 @@ public class Shape {
         this.height = height;
     }
 
+    
+    protected Vector<Shape> shapes = new Vector<Shape>();
+    public Vector<Shape> getShapes() {
+        return shapes;
+    }
     protected int x, y; // the top-left corner of the shape
     protected int width, height;
     protected String name;
@@ -81,23 +87,6 @@ public class Shape {
 
     protected boolean pointInShape(Point p) {
         return p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height;
-    }
-    public void setSelected(Point startPoint, Point endPoint) {
-        // make startPoint be the top-left corner of the shape, endPoint be the bottom-right corner of the shape
-        if(startPoint.x > endPoint.x) {
-            int temp = startPoint.x;
-            startPoint.x = endPoint.x;
-            endPoint.x = temp;
-        }
-        if(startPoint.y > endPoint.y) {
-            int temp = startPoint.y;
-            startPoint.y = endPoint.y;
-            endPoint.y = temp;
-        }
-
-        // shape is selected if it is in the rectangle of startPoint and endPoint
-        isSelected = startPoint.x <= x && startPoint.y <= y && endPoint.x >= x + width && endPoint.y >= y + height;
-        
     }
     public String getName() {
         return name;

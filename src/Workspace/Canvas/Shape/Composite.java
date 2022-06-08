@@ -45,7 +45,6 @@ public class Composite extends Shape {
         
     }
 
-    protected Vector<Shape> shapes = new Vector<Shape>();
 
     @Override
     public void draw(Graphics g) {

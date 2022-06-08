@@ -29,6 +29,15 @@ public class MenuArea extends JMenuBar{
             new MenuItem("Ungroup", new ActionListener(){
                 public void actionPerformed(java.awt.event.ActionEvent e){
                     System.out.println("Ungroup");
+                    Vector<Shape> selectedShapes = CanvasArea.getInstance().getSelectedShapes();
+                    for(Shape shape : selectedShapes) {
+                        CanvasArea.getInstance().getShapes().remove(shape);
+                        for(Shape child : shape.getShapes()) {
+                            child.setSelected(true);
+                            CanvasArea.getInstance().getShapes().add(child);
+                        }
+                    }
+                    CanvasArea.getInstance().repaint();
                 }
             }),
             new MenuItem("Change Name", new ActionListener(){
