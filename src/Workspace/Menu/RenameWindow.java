@@ -1,17 +1,9 @@
 package Workspace.Menu;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import javax.swing.event.*;
-
 import Workspace.Canvas.CanvasArea;
-
 import java.awt.event.*;
 
 public class RenameWindow {

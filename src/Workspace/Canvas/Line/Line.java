@@ -11,7 +11,6 @@ public class Line {
     protected Port startPort, endPort;
     protected Body LineBody = new Body();
     protected Arrow FrontArrow = new Arrow(), BackArrow = null;
-
     public Line(Shape startShape, Port startPort, Shape endShape, Port endPort) {
         this.startShape = startShape;
         this.endShape = endShape;

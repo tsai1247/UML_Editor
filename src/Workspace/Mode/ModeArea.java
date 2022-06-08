@@ -24,6 +24,7 @@ public class ModeArea extends JPanel {
         currentMode = mode;
     }
     
+    
     private static ModeArea instance = null;
     public static ModeArea getInstance() {
         if(instance == null) {
