@@ -9,6 +9,7 @@ public class ModeArea extends JPanel {
         ASSOCIATION,
         GENERALIZATION,
         COMPOSITION,
+        DEPENDENCY,
         CLASS,
         USECASE
     }

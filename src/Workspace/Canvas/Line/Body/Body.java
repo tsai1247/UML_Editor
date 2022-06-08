@@ -11,6 +11,7 @@ public class Body {
         var Line = new Line2D.Double(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
         g2d.setColor(Color.BLACK);
         g2d.setStroke(stroke);
+
         g2d.draw(Line);
     }
 }

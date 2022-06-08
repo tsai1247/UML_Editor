@@ -3,6 +3,7 @@ import javax.swing.JPanel;
 
 import Workspace.Canvas.Line.AssociationLine;
 import Workspace.Canvas.Line.CompositionLine;
+import Workspace.Canvas.Line.DependencyLine;
 import Workspace.Canvas.Line.GeneralizationLine;
 import Workspace.Canvas.Line.Line;
 import Workspace.Canvas.Shape.*;
@@ -221,6 +222,19 @@ public class CanvasArea extends JPanel{
                     );
                 }
                 break;
+            case DEPENDENCY:
+                endPoint = new Point(x, y);
+                startShape = getHoveredShape(startPoint);
+                endShape = getHoveredShape(endPoint);
+                if(startShape != null && endShape != null) {
+                    lines.add(
+                        new DependencyLine(
+                            startShape, startShape.getHoveredPort(startPoint),
+                            endShape, endShape.getHoveredPort(endPoint)
+                        )
+                    );
+                }
+                break;
             default:
                 break;
         }
@@ -251,6 +265,7 @@ public class CanvasArea extends JPanel{
                 break;
             case ASSOCIATION:
             case COMPOSITION:
+            case DEPENDENCY:
             case GENERALIZATION:
                 startPoint = new Point(x, y);
                 break;

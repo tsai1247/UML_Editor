@@ -3,8 +3,11 @@ import java.awt.*;
 
 
 public class DottedLine extends Body {
-    private static float[] dash = {5.0f};
+    private static float[] dash = {10f, 30f};
     public DottedLine() {
-        stroke =  new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
+        stroke = new BasicStroke(1,
+        BasicStroke.CAP_ROUND,
+        BasicStroke.JOIN_ROUND,
+        1.0f,dash,0); 
     }
 }
