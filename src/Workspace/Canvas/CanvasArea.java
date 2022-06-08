@@ -165,7 +165,8 @@ public class CanvasArea extends JPanel{
             case SELECT:
                 var hoveredShape = getHoveredShape(new Point(x, y));
                 if(hoveredShape != null) {
-                    var clickedPort = hoveredShape.getHoveredPort(new Point(x, y));
+                    var clickedPort = hoveredShape.getClickedPort(new Point(x, y));
+                    var hoveredPort = hoveredShape.getHoveredPort(new Point(x, y));
                     if(hoveredShape.isSelected() && clickedPort != null) {
                         // highlight all lines connected to this port
                         for(Line line : lines) {
@@ -177,7 +178,7 @@ public class CanvasArea extends JPanel{
                             }
                         }
                     }
-                    else {
+                    else if(hoveredPort != null) {
                         hoveredShape.setSelected(true);
                     }
                 }
@@ -246,7 +247,6 @@ public class CanvasArea extends JPanel{
     }
     
     public void Moved(int x, int y) {
-        System.out.println("move");
         for(Shape shape : shapes) {
             if(shape.isSelected()) {
                 shape.move(x - startPoint.x, y - startPoint.y);
