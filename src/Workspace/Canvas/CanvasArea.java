@@ -1,13 +1,13 @@
-package Canvas;
+package Workspace.Canvas;
 import javax.swing.JPanel;
 
-import Canvas.Line.AssociationLine;
-import Canvas.Line.CompositionLine;
-import Canvas.Line.GeneralizationLine;
-import Canvas.Line.Line;
-import Canvas.Shape.*;
-import Canvas.Shape.Class;
-import Mode.ModeArea;
+import Workspace.Canvas.Line.AssociationLine;
+import Workspace.Canvas.Line.CompositionLine;
+import Workspace.Canvas.Line.GeneralizationLine;
+import Workspace.Canvas.Line.Line;
+import Workspace.Canvas.Shape.*;
+import Workspace.Canvas.Shape.Class;
+import Workspace.Mode.ModeArea;
 
 import java.awt.event.*;
 import java.util.Vector;

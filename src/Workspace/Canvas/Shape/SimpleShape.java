@@ -1,4 +1,4 @@
-package Canvas.Shape;
+package Workspace.Canvas.Shape;
 import java.awt.Graphics;
 
 public class SimpleShape extends Shape {

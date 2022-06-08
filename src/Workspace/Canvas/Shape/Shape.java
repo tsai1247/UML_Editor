@@ -1,8 +1,8 @@
-package Canvas.Shape;
+package Workspace.Canvas.Shape;
 import java.awt.*;
 import java.util.Vector;
 
-import Canvas.Line.Line;
+import Workspace.Canvas.Line.Line;
 
 public abstract class Shape {
     public enum Port {

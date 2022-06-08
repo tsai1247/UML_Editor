@@ -1,10 +1,11 @@
+package Workspace;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 
 import javax.swing.*;
-import Menu.MenuArea;
-import Mode.ModeArea;
-import Canvas.CanvasArea;
+import Workspace.Menu.MenuArea;
+import Workspace.Mode.ModeArea;
+import Workspace.Canvas.CanvasArea;
 
 
 public class Main {

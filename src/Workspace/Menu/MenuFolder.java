@@ -1,4 +1,4 @@
-package Menu;
+package Workspace.Menu;
 import javax.swing.JMenu;
 
 public class MenuFolder extends JMenu {

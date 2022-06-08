@@ -1,4 +1,4 @@
-package Canvas.Shape;
+package Workspace.Canvas.Shape;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Color;

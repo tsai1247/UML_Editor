@@ -1,16 +1,17 @@
-package Canvas.Line;
+package Workspace.Canvas.Line;
 import java.awt.*;
 
-import Canvas.Shape.Shape;
-import Canvas.Shape.Shape.Port;
+import Workspace.Canvas.Shape.Shape;
+import Workspace.Canvas.Shape.Shape.Port;
 
-public class AssociationLine extends Line {
-    public AssociationLine(Shape startShape, Port startPort, Shape endShape, Port endPort) {
+public class GeneralizationLine extends Line {
+    public GeneralizationLine(Shape startShape, Port startPort, Shape endShape, Port endPort) {
         super(startShape, startPort, endShape, endPort);
     }
 
     @Override
     public void draw(Graphics g) {
+        super.draw(g);
         super.draw(g);
         
         // draw the arrow
@@ -22,5 +23,6 @@ public class AssociationLine extends Line {
         drawALine(g2d, startPoint, endPoint);
         drawALine(g2d, endPoint, arrowHeadLeftPoint);
         drawALine(g2d, endPoint, arrowHeadRightPoint);
+        drawALine(g2d, arrowHeadLeftPoint, arrowHeadRightPoint);
     }
 }

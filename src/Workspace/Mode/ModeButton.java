@@ -1,10 +1,10 @@
-package Mode;
+package Workspace.Mode;
 
 import java.awt.event.ActionListener;
 
 import javax.swing.JToggleButton;
 
-import Mode.ModeArea.Mode;
+import Workspace.Mode.ModeArea.Mode;
 
 public class ModeButton extends JToggleButton {
     public ModeButton(Mode mode) {

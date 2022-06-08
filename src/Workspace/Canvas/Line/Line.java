@@ -1,9 +1,9 @@
-package Canvas.Line;
+package Workspace.Canvas.Line;
 import java.awt.*;
 import java.awt.geom.*;
 
-import Canvas.Shape.Shape;
-import Canvas.Shape.Shape.Port;
+import Workspace.Canvas.Shape.Shape;
+import Workspace.Canvas.Shape.Shape.Port;
 
 public class Line {
     protected Shape startShape, endShape;

@@ -1,4 +1,4 @@
-package Menu;
+package Workspace.Menu;
 import javax.swing.JMenuBar;
 import java.awt.event.ActionListener;
 

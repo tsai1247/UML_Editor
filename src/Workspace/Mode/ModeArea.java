@@ -1,4 +1,4 @@
-package Mode;
+package Workspace.Mode;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
