@@ -89,6 +89,17 @@ public class Shape {
         }
         return port;
     }
+    public Port getClickedPort(Point p)
+    {
+        for(Port port : Port.values())
+        {
+            if(p.distance(getPosition(port)) < 10)
+            {
+                return port;
+            }
+        }
+        return null;
+    }
 
     protected boolean pointInShape(Point p) {
         return p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height;

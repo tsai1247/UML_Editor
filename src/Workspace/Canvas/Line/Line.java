@@ -38,4 +38,24 @@ public class Line {
             BackArrow.draw(g, startShape.getPosition(startPort), endShape.getPosition(endPort));
     }
 
+    public Port getStartPort() {
+        return startPort;
+    }
+
+    public Port getEndPort() {
+        return endPort;
+    }
+
+    public void setHighlighted(boolean b) {
+        LineBody.setHighlighted(b);
+    }
+
+    public Shape getStartShape() {
+        return startShape;
+    }
+
+    public Shape getEndShape() {
+        return endShape;
+    }
+
 }
