@@ -15,20 +15,14 @@ public class Main {
 
     private static JFrame frame;
     private static JPanel panel;
-    private static int width = 800, height = 600;
-    public static int getWidth() {
-        return width;
-    }
-    public static int getHeight() {
-        return height;
-    }
+    private static int width = 800, height = 500;
 
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("UML Editor");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
+        frame.getContentPane().setLayout(new BorderLayout());
         frame.setPreferredSize(new Dimension(width, height));
 
         //Add MenuArea to frame
@@ -37,8 +31,7 @@ public class Main {
         //Add JPanel to frame
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.setBounds(0, 0, width, height);
-        frame.getContentPane().add(panel);
+        frame.getContentPane().add(panel, BorderLayout.CENTER);
 
         //Add CanvasArea to panel
         panel.add(canvasarea, BorderLayout.CENTER);
