@@ -8,6 +8,7 @@ public class Class extends Shape {
 
     public Class(int x, int y) {
         super(x, y, 100, 80);
+        nameOffset = new Point(0, -20);
     }
 
     @Override

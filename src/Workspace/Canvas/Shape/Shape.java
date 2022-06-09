@@ -83,6 +83,7 @@ public class Shape {
         return isSelected;
     }
     
+    protected Point nameOffset = new Point(0, 0);
     public void draw(Graphics g)
     {
         if(isSelected) {
@@ -100,7 +101,8 @@ public class Shape {
 
         // draw name
         g.setColor(Color.BLACK);
-        g.drawString(name, x + width / 2 - name.length() * 3, y + height / 2);
+        
+        g.drawString(name, x + width / 2 - name.length() * 3 + nameOffset.x, y + height / 2 + nameOffset.y);
     }
 
     public boolean isHovered(Point p)
