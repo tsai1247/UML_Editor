@@ -213,7 +213,7 @@ public class CanvasArea extends JPanel{
                 endPoint = new Point(x, y);
                 startShape = getHoveredShape(startPoint);
                 endShape = getHoveredShape(endPoint);
-                if(startShape != null && endShape != null && startShape != endShape) {
+                if(startShape != null && endShape != null && startShape != endShape && startShape.getShapes().size() == 0 && endShape.getShapes().size() == 0) {
                     var line = createLine(ModeArea.getInstance().getCurrentMode(), startShape, startPoint, endShape, endPoint);
                     if(line != null) {
                         lines.add(line);
