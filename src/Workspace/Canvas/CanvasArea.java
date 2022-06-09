@@ -32,16 +32,19 @@ public class CanvasArea extends JPanel{
             public void mouseClicked(MouseEvent e)
             {
                 Clicked(e.getX(), e.getY());
+                setOptionEnabled();
             }
             @Override
             public void mousePressed(MouseEvent e)
             {
                 Pressed(e.getX(), e.getY());
+                setOptionEnabled();
             }
             @Override
             public void mouseReleased(MouseEvent e)
             {
                 Released(e.getX(), e.getY());
+                setOptionEnabled();
             }
         });
     }
@@ -182,13 +185,13 @@ public class CanvasArea extends JPanel{
                         hoveredShape.setSelected(true);
                     }
                 }
-                setOptionEnabled();
-                break;
-            case USECASE:
-            case CLASS:
-                shapes.add(createShape(ModeArea.getInstance().getCurrentMode(), new Point(x, y)));
                 break;
             default:
+                var shape = createShape(ModeArea.getInstance().getCurrentMode(), new Point(x, y));
+                if(shape != null) {
+                    shapes.add(shape);
+                    shape.setSelected(true);
+                }
                 break;
         }
 
@@ -205,20 +208,17 @@ public class CanvasArea extends JPanel{
                         shape.setSelected(true);
                     }
                 }
-                setOptionEnabled();
                 break;
-            case ASSOCIATION:
-            case COMPOSITION:
-            case GENERALIZATION:
-            case DEPENDENCY:
+            default:
                 endPoint = new Point(x, y);
                 startShape = getHoveredShape(startPoint);
                 endShape = getHoveredShape(endPoint);
                 if(startShape != null && endShape != null && startShape != endShape) {
-                    lines.add(createLine(ModeArea.getInstance().getCurrentMode(), startShape, startPoint, endShape, endPoint));
+                    var line = createLine(ModeArea.getInstance().getCurrentMode(), startShape, startPoint, endShape, endPoint);
+                    if(line != null) {
+                        lines.add(line);
+                    }
                 }
-                break;
-            default:
                 break;
         }
         this.repaint();
@@ -226,23 +226,11 @@ public class CanvasArea extends JPanel{
     
 
     public void Pressed(int x, int y) {
-        switch(ModeArea.getInstance().getCurrentMode()) {
-            case SELECT:
-                startPoint = new Point(x, y);
-                if(getHoveredShape(startPoint) == null || !getHoveredShape(startPoint).isSelected()) {
-                    ClearSelectedShape();
-                }
-                ClearHighlightedLine();
-                break;
-            case ASSOCIATION:
-            case COMPOSITION:
-            case DEPENDENCY:
-            case GENERALIZATION:
-                startPoint = new Point(x, y);
-                break;
-            default:
-                break;
+        startPoint = new Point(x, y);
+        if(getHoveredShape(startPoint) == null || !getHoveredShape(startPoint).isSelected()) {
+            ClearSelectedShape();
         }
+        ClearHighlightedLine();
         this.repaint();
     }
     
